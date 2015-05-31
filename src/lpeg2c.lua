@@ -109,6 +109,41 @@ function functions.behind(code)
     yield('}')
 end
 
+function functions.span(code)
+    yield('for (; s < mstate->e; s++) {')
+    yield('if (!testchar({%s}, *s)) {', bin2c(code.charset))
+    yield('break;')
+    yield('}')
+    yield('}')
+    yield('return %s(s, mstate);', functionName(code.next))
+end
+
+function functions.jmp(code)
+    yield('return %s(s, mstate);', functionName(code.pointed))
+end
+
+function functions.choice(code)
+    yield('int captop = mstate->captop;')
+    yield('const char* try1 = %s(s, mstate);',
+        functionName(code.next))
+    yield('if (try1 == LPEG2C_FAIL) {')
+    yield('mstate->captop = captop;')
+    yield('return %s(s, mstate);', functionName(code.pointed))
+    yield('} else {')
+    yield('return try1;')
+    yield('}')
+end
+
+function functions.call(code)
+    yield('const char* try1 = %s(s, mstate);',
+        functionName(code.pointed))
+    yield('if (try1 == LPEG2C_FAIL) {')
+    yield('return LPEG2C_FAIL;')
+    yield('} else {')
+    yield('return %s(try1, mstate);', functionName(code.next))
+    yield('}')
+end
+
 local function defineFunction(code)
     local name = functionName(code)
     local decl = functionDecl(name)
