@@ -5,6 +5,7 @@ return [[
 #include <assert.h>
 
 #define LPEG2C_FAIL (const char*)1
+#define LPEG2C_FAIL_AFTER_COMMIT (const char*)2
 
 #define testchar(st,c) \
     (((int)(st)[((c) >> 3)] & (1 << ((c) & 7))))

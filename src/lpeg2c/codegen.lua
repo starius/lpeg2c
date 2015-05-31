@@ -139,6 +139,18 @@ function functions.choice(code)
     yield('if (try1 == LPEG2C_FAIL) {')
     yield('mstate->captop = captop;')
     yield('return %s(s, mstate);', functionName(code.pointed))
+    yield('} else if (try1 == LPEG2C_FAIL_AFTER_COMMIT) {')
+    yield('return LPEG2C_FAIL;')
+    yield('} else {')
+    yield('return try1;')
+    yield('}')
+end
+
+function functions.commit(code)
+    yield('const char* try1 = %s(s, mstate);',
+        functionName(code.pointed))
+    yield('if (try1 == LPEG2C_FAIL) {')
+    yield('return LPEG2C_FAIL_AFTER_COMMIT;')
     yield('} else {')
     yield('return try1;')
     yield('}')
