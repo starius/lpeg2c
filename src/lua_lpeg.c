@@ -36,6 +36,11 @@ static void addInstruction(lua_State* L,
         lua_pushinteger(L, key);
         lua_setfield(L, -2, "key");
     }
+    if (i->i.code == IBehind) {
+        int n = i->i.aux;
+        lua_pushinteger(L, n);
+        lua_setfield(L, -2, "n");
+    }
     //
     lua_rawseti(L, -2, n);
 }
