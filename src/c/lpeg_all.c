@@ -54,7 +54,12 @@ int lpeg_hasCharset(const Instruction* inst) {
 }
 
 const char* lpeg_instCharset(const Instruction* inst) {
-    return (inst+1)->buff;
+    int code = inst->i.code;
+    if (code == ISet) {
+        return (inst+1)->buff;
+    } else {
+        return (inst+2)->buff;
+    }
 }
 
 int lpeg_hasRef(const Instruction* inst) {
