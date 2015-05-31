@@ -6,6 +6,9 @@ return [[
 
 #define LPEG2C_FAIL (const char*)1
 
+#define testchar(st,c) \
+    (((int)(st)[((c) >> 3)] & (1 << ((c) & 7))))
+
 typedef unsigned char byte;
 
 #define caplistidx(ptop) ((ptop) + 2)
