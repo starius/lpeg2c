@@ -50,12 +50,12 @@ char lpeg_instChar(const Instruction* inst) {
 
 int lpeg_hasCharset(const Instruction* inst) {
     int code = inst->i.code;
-    return code == ISet || code == ITestSet;
+    return code == ISet || code == ITestSet || code == ISpan;
 }
 
 const char* lpeg_instCharset(const Instruction* inst) {
     int code = inst->i.code;
-    if (code == ISet) {
+    if (code == ISet || code == ISpan) {
         return (inst+1)->buff;
     } else {
         return (inst+2)->buff;
