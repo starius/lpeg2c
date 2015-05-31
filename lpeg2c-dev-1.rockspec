@@ -21,8 +21,8 @@ build = {
     modules = {
         ['lpeg2c.parseLpegByteCode'] = {
             sources = {
-                "src/lpeg_all.c",
-                "src/lua_lpeg.c",
+                "src/c/lpeg_all.c",
+                "src/c/lua_lpeg.c",
             },
             incdirs = {"$(LPEG_INCDIR)", '.'},
         },
