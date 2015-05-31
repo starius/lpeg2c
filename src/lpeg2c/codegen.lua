@@ -88,8 +88,9 @@ function functions.testchar(code)
 end
 
 function functions.set(code)
-    yield('if (s < mstate->e && testchar({%s}, *s)) {',
+    yield('static const unsigned char B1[]={%s};',
         bin2c(code.charset))
+    yield('if (s < mstate->e && testchar(B1, *s)) {')
     yield('return %s(s+1, mstate);', functionName(code.next))
     yield('} else {')
     yield('return LPEG2C_FAIL;')
@@ -97,7 +98,9 @@ function functions.set(code)
 end
 
 function functions.testset(code)
-    yield('if (s < mstate->e && testchar({%s}, *s)) {',
+    yield('static const unsigned char B1[]={%s};',
+        bin2c(code.charset))
+    yield('if (s < mstate->e && testchar(B1, *s)) {',
         bin2c(code.charset))
     yield('return %s(s, mstate);', functionName(code.next))
     yield('} else {')
@@ -115,8 +118,10 @@ function functions.behind(code)
 end
 
 function functions.span(code)
+    yield('static const unsigned char B1[]={%s};',
+        bin2c(code.charset))
     yield('for (; s < mstate->e; s++) {')
-    yield('if (!testchar({%s}, *s)) {', bin2c(code.charset))
+    yield('if (!testchar(B1, *s)) {')
     yield('break;')
     yield('}')
     yield('}')
