@@ -4,6 +4,8 @@
 #include "lpeg_all.h"
 #include "compat.h"
 
+#define CHARSET_BYTES 32
+
 static void addInstruction(lua_State* L,
         Instruction* i, int n, int offset) {
     lua_newtable(L);
@@ -23,7 +25,7 @@ static void addInstruction(lua_State* L,
     }
     if (lpeg_hasCharset(i)) {
         const char* set = lpeg_instCharset(i);
-        lua_pushlstring(L, set, CHARSETINSTSIZE);
+        lua_pushlstring(L, set, CHARSET_BYTES);
         lua_setfield(L, -2, "charset");
     }
     if (lpeg_hasRef(i)) {
