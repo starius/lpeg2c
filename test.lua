@@ -1,8 +1,8 @@
 local lpeg = require 'lpeg'
-local lpeg2c = require 'lpeg2c'
+local parseLpegByteCode = require 'lpeg2c.parseLpegByteCode'
 
 local pattern = lpeg.P 'abc'
 --lpeg.ptree(pattern)
 --lpeg.pcode(pattern)
 
-pattern2 = lpeg2c.parseLpegByteCode(pattern)
+pattern2 = parseLpegByteCode(pattern)

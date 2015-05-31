@@ -19,7 +19,7 @@ external_dependencies = {
 build = {
     type = "builtin",
     modules = {
-        ['lpeg2c'] = {
+        ['lpeg2c.parseLpegByteCode'] = {
             sources = {
                 "src/lpeg_all.c",
                 "src/lua_lpeg.c",

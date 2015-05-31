@@ -69,13 +69,7 @@ int parseLpegByteCode(lua_State* L) {
     return 1;
 }
 
-static const luaL_Reg lpeg2c_functions[] = {
-    {"parseLpegByteCode", parseLpegByteCode},
-    {NULL, NULL}
-};
-
-int luaopen_lpeg2c(lua_State* L) {
-    lua_newtable(L);
-    compat_setfuncs(L, lpeg2c_functions);
+int luaopen_lpeg2c_parseLpegByteCode(lua_State* L) {
+    lua_pushcfunction(L, parseLpegByteCode);
     return 1;
 }
