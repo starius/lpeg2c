@@ -196,7 +196,7 @@ local function setPointers(codes)
 end
 
 local function generate(pattern)
-    return coroutine.wrap(function(pattern)
+    return coroutine.wrap(function()
         local codes = parsePattern(pattern)
         setPointers(codes)
         rawYield(require 'lpeg2c.prologue_c')
