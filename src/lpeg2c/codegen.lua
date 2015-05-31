@@ -10,7 +10,7 @@ end
 local function parsePattern(pattern)
     local lpeg = require 'lpeg'
     local parse = require 'lpeg2c.parseLpegByteCode'
-    local pattern = lpeg.P 'abc'
+    local pattern = lpeg.P(pattern)
     return parse(pattern)
 end
 
