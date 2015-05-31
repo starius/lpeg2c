@@ -26,5 +26,6 @@ build = {
             },
             incdirs = {"$(LPEG_INCDIR)", '.'},
         },
+        ['lpeg2c'] = 'src/lpeg2c.lua',
     },
 }
