@@ -12,7 +12,8 @@ return function(pattern)
     local so_filename = tmp .. '.so'
     local cmd = cmd:format(c_filename, so_filename)
     os.execute(cmd)
-    local f = package.loadlib(so_filename, 'lua_lpeg2c_match')
+    local f = assert(package.loadlib(
+        so_filename, 'lua_lpeg2c_match'))
     os.remove(so_filename)
     os.remove(c_filename)
     os.remove(tmp)
