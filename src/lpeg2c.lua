@@ -14,8 +14,12 @@ local function parsePattern(pattern)
     return parse(pattern)
 end
 
+local function rawYield(text)
+    coroutine.yield(text)
+end
+
 local function yield(text, ...)
-    coroutine.yield(text:format(...) .. '\n')
+    rawYield(text:format(...) .. '\n')
 end
 
 local function functionName(code)
@@ -163,6 +167,19 @@ local function defineFunctions(codes)
     end
 end
 
+local function defineMatcher(codes)
+    local first = assert(codes[1])
+    yield('static const char* lpeg2c_match(MatchState* mstate)')
+    yield('{')
+    yield('const char* r = %s(mstate->s, mstate);',
+        functionName(first))
+    yield('if (r == LPEG2C_FAIL) {')
+    yield('r = NULL;')
+    yield('}')
+    yield('return r;')
+    yield('}')
+end
+
 local function setPointers(codes)
     for _, code in ipairs(codes) do
         code.next = codes[_ + 1]
@@ -182,8 +199,11 @@ local function generate(pattern)
     return coroutine.wrap(function(pattern)
         local codes = parsePattern(pattern)
         setPointers(codes)
+        rawYield(require 'lpeg2c.prologue_c')
         declareFunctions(codes)
         defineFunctions(codes)
+        defineMatcher(codes)
+        rawYield(require 'lpeg2c.epilogue_c')
     end)
 end
 
