@@ -23,7 +23,8 @@ local function functionName(code)
 end
 
 local function functionDecl(name)
-    local decl = 'char* %s(const char* s, MatchState* mstate)'
+    local decl = [[static char* %s(const char* s,
+        MatchState* mstate)]]
     return decl:format(name)
 end
 
